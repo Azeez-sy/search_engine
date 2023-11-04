@@ -1,13 +1,37 @@
 from documents import DocumentStore
 from index import BaseIndex
-from tokenizer import tokenize
+from tokenizer import tokenize, quotation_parser
 from tf_idf_index import TfIdfIndex
 from tf_idf_inverted_index import TfIdfInvertedIndex
+from priority_search import PhraseSearch
 import json
 import timeit
 import counting
 import indexing_process
 from collections import Counter
+
+import sys
+
+
+def not_implemented_yet():
+    print("Outside of demo: this has not be implemented")
+    sys.exit(0)
+
+
+def case_handler(query_str, number_of_results):
+    unquoted_tokens, quoted_tokens = quotation_parser(query_str)
+
+    if len(unquoted_tokens) == 0 and len(quoted_tokens) == 0:
+        not_implemented_yet()
+
+    if len(unquoted_tokens) == 0 and len(quoted_tokens) != 0:
+        not_implemented_yet()
+
+    if len(unquoted_tokens) != 0 and len(quoted_tokens) == 0:
+        not_implemented_yet()
+
+    if len(unquoted_tokens) != 0 and len(quoted_tokens) != 0:
+        return PhraseSearch.handle_mixed_query(unquoted_tokens, quoted_tokens, number_of_results)
 
 
 def preprocess_query(query_str: str):
