@@ -5,11 +5,6 @@ from tf_idf_index import TfIdfIndex
 from tf_idf_inverted_index import TfIdfInvertedIndex
 from priority_search import PhraseSearch
 import json
-import timeit
-import counting
-import indexing_process
-from collections import Counter
-
 import sys
 
 
@@ -23,15 +18,28 @@ def case_handler(query_str, number_of_results):
 
     if len(unquoted_tokens) == 0 and len(quoted_tokens) == 0:
         not_implemented_yet()
+        # handle_empty_querie()
 
     if len(unquoted_tokens) == 0 and len(quoted_tokens) != 0:
         not_implemented_yet()
+        # return PhraseSearch.handle_quoted_query(quoted_tokens, number_of_results)
 
     if len(unquoted_tokens) != 0 and len(quoted_tokens) == 0:
         not_implemented_yet()
+        # return PhraseSearch.handle_unquoted_query(unquoted_tokens, number_of_results)
 
     if len(unquoted_tokens) != 0 and len(quoted_tokens) != 0:
         return PhraseSearch.handle_mixed_query(unquoted_tokens, quoted_tokens, number_of_results)
+
+
+def user_interface():
+    query_str = input("Enter your query: ")
+    number_of_results = input("Enter number of results desired: ")
+    document_ids = case_handler(query_str, number_of_results)
+
+    print("Document IDs returned by the search:")
+    for doc_id in document_ids:
+        print(doc_id)
 
 
 def preprocess_query(query_str: str):
@@ -71,14 +79,14 @@ class QueryProcess:
 
 
 
-qp1 = QueryProcess(DocumentStore, TfIdfIndex(), )
-qp2 = QueryProcess(DocumentStore, TfIdfInvertedIndex())
-qp3 = QueryProcess(DocumentStore, TfIdfInvertedIndex(), "stop_words.json")
-
-result1 = timeit.timeit(lambda: qp1.search(query='credit card', number_of_results=10), number=100)
-result2 = timeit.timeit(lambda: qp2.search(query='credit card', number_of_results=10), number=100)
-result3 = timeit.timeit(lambda: qp3.search(query='credit card', number_of_results=10), number=100)
-
-print(result1)
-print(result2)
-print(result3)
+# qp1 = QueryProcess(DocumentStore, TfIdfIndex(), )
+# qp2 = QueryProcess(DocumentStore, TfIdfInvertedIndex())
+# qp3 = QueryProcess(DocumentStore, TfIdfInvertedIndex(), "stop_words.json")
+#
+# result1 = timeit.timeit(lambda: qp1.search(query='credit card', number_of_results=10), number=100)
+# result2 = timeit.timeit(lambda: qp2.search(query='credit card', number_of_results=10), number=100)
+# result3 = timeit.timeit(lambda: qp3.search(query='credit card', number_of_results=10), number=100)
+#
+# print(result1)
+# print(result2)
+# print(result3)
