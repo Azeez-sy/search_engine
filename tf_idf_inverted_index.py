@@ -84,5 +84,6 @@ class TfIdfInvertedIndex(BaseIndex):
         for doc_id in matching_doc_ids:
             score = self.combine_term_scores(processed_query, doc_id)
             scores[doc_id] = score
+
         sorted_docs = sorted(matching_doc_ids, key=scores.get, reverse=True)
         return sorted_docs[:number_of_results]
